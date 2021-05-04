@@ -65,7 +65,7 @@
                 language: 'English - Written',
 
                 // Requested agent skills (Agent must have these skills to receive chat)
-                skills: ['Computers', 'Printers'],
+                skills: [],
                 // OR
                 //skills: [],
 
@@ -73,10 +73,9 @@
                 priority: 0,
 
                 // Queue Name
-                queueName : 'Support',
+                queueName : 'Queue_Name_1',
 
                 // Target agent email (OPTIONAL)
-                agentEmail: 'dejan.pejovic@example.com',
 
                 // Whether to show submit button or send message on Enter keypress
                 showSubmitButton: true,
@@ -153,8 +152,8 @@
                             //Use the updateConfig function to update batches of properties by passing in a partially filled chatConfig object
                             webchat.updateConfig({
                                 agentEmail: 'debrah.agent@example.com',
-                                locale: 'es',
-                                welcomeMessage: 'Welcome to Example support',
+                                locale: 'en',
+                                welcomeMessage: 'Welcome to queue 1',
                             });
 
                             // Alternatively, call webchat.renderPopup here. Note that reconnects do not apply to popup chat.
