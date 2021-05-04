@@ -3,11 +3,11 @@
  * their specific installations.
  */
 var config = {
-  orgId: '',
-  orgName: '',
+  orgId: 'b969b710-80cf-4689-9bcf-e9f3befa8e05',
+  orgName: 'Startelecom',
   queueName: '',
   agentEmail: '',
-  cobrowseDeploymentKey: ''
+  cobrowseDeploymentKey: '8fc6d935-8073-46b7-8240-727f42969740'
 };
 
 var webchatConfig = {
