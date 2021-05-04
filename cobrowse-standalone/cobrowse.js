@@ -1,7 +1,10 @@
+
+function showCobrowse() {
+  
 if (window.PureCloud.cobrowse.isSupported()) {
     window.PureCloud.cobrowse.startSharing({
       participant: {
-        displayName: 'John Doe'
+        displayName: 'Dejan Pejovic'
       }
     }, function(err, sharerSession) {
       if (err) {
@@ -13,4 +16,6 @@ if (window.PureCloud.cobrowse.isSupported()) {
     });
 } else {
   throw new Error('Co-browse is not supported');
+}
+
 }
