@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+
+
+<html>
+
+<head runat="server">
+    <title>Chat</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="/kffCorporate/favicon.ico" />
+    <link href="/CMSPages/GetResource.ashx?stylesheetfile=/kffCorporate/ui/site.css" type="text/css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
+    <script>
+    (function(i, s, o, g, r, a, m) {
+      i['GoogleAnalyticsObject'] = r;
+      i[r] = i[r] || function() {
+        (i[r].q = i[r].q || []).push(arguments)
+      }, i[r].l = 1 * new Date();
+      a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];
+      a.async = 1;
+      a.src = g;
+      m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-10894361-16', 'auto');
+    ga('require', 'linkid');
+    ga('send', 'pageview');
+    </script>
+    <link href="/CMSPages/GetResource.ashx?stylesheetfile=/kffCorporate/ui/site.css" type="text/css" rel="stylesheet" />
+    <style type="text/css">
+        #chat-button {
+            display: none;
+        }
+
+            #chat-button.purecloud-chat-available {
+                display: inline;
+            }
+    </style>
+    <style type="text/css">
+        .form-label
+        {
+            font-family:"Roboto",Arial,sans-serif;
+            font-size:1.5rem;
+            font-weight:400;
+        }
+        .form-button
+        {
+            font-family:"Roboto",Arial,sans-serif;
+            font-size:1.5rem;
+            font-weight:400;
+        }
+        .form-hours
+        {
+            font-family:"Roboto",Arial,sans-serif;
+            font-size:1.5rem;
+            font-weight:400;
+            color:Black;
+        }
+</style>
+</head>
+
+<body>
+
+    <form id="chatForm">
+        <h3 class="form-label">Thank you for contacting Knowledge First Financial </h3>
+        <span class="form-hours">
+            Monday – Thursday: 9:00am – 8:00pm EST
+            <br />
+            Friday: 9:00am - 6:00pm EST
+        </span>
+        <table class="webchat-config">
+            <tbody>
+                <tr>
+                    <th class="form-label">First Name:&nbsp;</th>
+                    <td class="form-label"><input type="text" id="first-name" value="" /></td>
+                </tr>
+                <tr>
+                    <th class="form-label">Last Name:&nbsp;</th>
+                    <td class="form-label"><input type="text" id="last-name" value="" /></td>
+                </tr>
+                <tr>
+                    <th class="form-label">Phone:&nbsp;</th>
+                    <td class="form-label"><input type="text" id="phone" value="" /></td>
+                </tr>
+            </tbody>
+        </table>
+        <button class="form-button" type="button" id="chat-button">Start Chat</button>
+
+        <!--modal-->
+        <div class="modal" id="liveChatWarningModal" role="dialog">
+            <div class="modal-dialog .modal-dialog-centered">
+                <div class="modal-content">
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <br />
+                        <p><b>A chat has already been started.</b><p>
+                        <p><b>Please try again in 5 minutes.</b></p>
+                        <br />
+                    </div>
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div id="chat-container" style="height:500px"></div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script id="purecloud-webchat-js" type="text/javascript" src="https://apps.mypurecloud.com/webchat/jsapi-v1.js" region="us-east-1" org-guid="813113a3-e8f6-487e-96d8-d1f4d294b18c" deployment-key="0b66f603-fe0a-4a14-a387-8888890bdcf2"></script>
+
+    <script type="text/javascript">
+
+        $(document).ready(function initializeChat() {
+
+
+            var chatConfig = {
+                webchatAppUrl: 'https://apps.mypurecloud.com/webchat',
+                webchatServiceUrl: 'https://realtime.mypurecloud.com:443',
+                orgGuid: '813113a3-e8f6-487e-96d8-d1f4d294b18c',
+                orgId: '18421',
+                orgName: 'knowledgefirstfinancial1',
+                queueName: 'Chat EN',
+                locale: 'en',
+                logLevel: 'INFO',
+                companyLogoSmall: '',
+                welcomeMessage: 'Thank you for contacting Knowledge First Financial.',
+
+                cssClass: 'webchat-frame',
+                css: {
+                    width: '100%',
+                    height: '350px'
+                },
+                reconnectEnabled: true,
+                cobrowseConfig: {
+                    deploymentKey: "i1fRw5w0BUfWGZuyKZucoHAd478BZdC5"
+                },
+                offlineSchedules: [
+                    {
+                        day: 'Saturday,Sunday',
+                        city: 'America/New_York'
+                    },
+
+                    /*The proprty 'month' below is 0 index based i.e. month January starts with 0*/
+                    /*2019*/
+                    {
+                        date: 01,
+                        month: 06,
+                        year: 2019,
+                        city: 'America/New_York'
+                    },
+                    {
+                        date: 05,
+                        month: 07,
+                        year: 2019,
+                        city: 'America/New_York'
+                    },
+                    {
+                        date: 02,
+                        month: 08,
+                        year: 2019,
+                        city: 'America/New_York'
+                    },
+                    {
+                        date: 14,
+                        month: 09,
+                        year: 2019,
+                        city: 'America/New_York'
+                    },
+                    {
+                        date: 25,
+                        month: 11,
+                        year: 2019,
+                        city: 'America/New_York'
+                    },
+                    {
+                        date: 26,
+                        month: 11,
+                        year: 2019,
+                        city: 'America/New_York'
+                    },
+
+                    /*2020*/
+                    {
+                        date: 01,
+                        month: 00,
+                        year: 2020,
+                        city: 'America/New_York'
+                    },
+                    {
+                        date: 17,
+                        month: 01,
+                        year: 2020,
+                        city: 'America/New_York'
+                    },
+                    {
+                        date: 10,
+                        month: 03,
+                        year: 2020,
+                        city: 'America/New_York'
+                    },
+                    {
+                        date: 18,
+                        month: 04,
+                        year: 2020,
+                        city: 'America/New_York'
+                    },
+                    {
+                        date: 01,
+                        month: 06,
+                        year: 2020,
+                        city: 'America/New_York'
+                    },
+                    {
+                        date: 03,
+                        month: 07,
+                        year: 2020,
+                        city: 'America/New_York'
+                    },
+                    {
+                        date: 07,
+                        month: 08,
+                        year: 2020,
+                        city: 'America/New_York'
+                    },
+                    {
+                        date: 12,
+                        month: 09,
+                        year: 2020,
+                        city: 'America/New_York'
+                    },
+                    {
+                        date: 25,
+                        month: 11,
+                        year: 2020,
+                        city: 'America/New_York'
+                    },
+                    {
+                        date: 26,
+                        month: 11,
+                        year: 2020,
+                        city: 'America/New_York'
+                    },
+
+                    /*2021*/
+                    {
+                        date: 01,
+                        month: 00,
+                        year: 2021,
+                        city: 'America/New_York'
+                    },
+                    {
+                        date: 15,
+                        month: 01,
+                        year: 2021,
+                        city: 'America/New_York'
+                    },
+                    {
+                        date: 02,
+                        month: 03,
+                        year: 2021,
+                        city: 'America/New_York'
+                    },
+                    {
+                        date: 24,
+                        month: 04,
+                        year: 2021,
+                        city: 'America/New_York'
+                    },
+                    {
+                        date: 01,
+                        month: 06,
+                        year: 2021,
+                        city: 'America/New_York'
+                    },
+                    {
+                        date: 02,
+                        month: 07,
+                        year: 2021,
+                        city: 'America/New_York'
+                    },
+                    {
+                        date: 06,
+                        month: 08,
+                        year: 2021,
+                        city: 'America/New_York'
+                    },
+                    {
+                        date: 11,
+                        month: 09,
+                        year: 2021,
+                        city: 'America/New_York'
+                    },
+                    {
+                        date: 25,
+                        month: 11,
+                        year: 2021,
+                        city: 'America/New_York'
+                    },
+                    {
+                        date: 26,
+                        month: 11,
+                        year: 2021,
+                        city: 'America/New_York'
+                    },
+
+                    /*2022*/
+                    {
+                        date: 01,
+                        month: 00,
+                        year: 2022,
+                        city: 'America/New_York'
+                    },
+                    {
+                        date: 21,
+                        month: 01,
+                        year: 2022,
+                        city: 'America/New_York'
+                    },
+                    {
+                        date: 15,
+                        month: 03,
+                        year: 2022,
+                        city: 'America/New_York'
+                    },
+                    {
+                        date: 23,
+                        month: 04,
+                        year: 2022,
+                        city: 'America/New_York'
+                    },
+                    {
+                        date: 01,
+                        month: 06,
+                        year: 2022,
+                        city: 'America/New_York'
+                    },
+                    {
+                        date: 01,
+                        month: 07,
+                        year: 2022,
+                        city: 'America/New_York'
+                    },
+                    {
+                        date: 05,
+                        month: 08,
+                        year: 2022,
+                        city: 'America/New_York'
+                    },
+                    {
+                        date: 10,
+                        month: 09,
+                        year: 2022,
+                        city: 'America/New_York'
+                    },
+                    {
+                        date: 25,
+                        month: 11,
+                        year: 2022,
+                        city: 'America/New_York'
+                    },
+                    {
+                        date: 26,
+                        month: 11,
+                        year: 2022,
+                        city: 'America/New_York'
+                    },
+
+                    /*2023*/
+                    {
+                        date: 01,
+                        month: 00,
+                        year: 2023,
+                        city: 'America/New_York'
+                    },
+                    {
+                        date: 20,
+                        month: 01,
+                        year: 2023,
+                        city: 'America/New_York'
+                    },
+                    {
+                        date: 07,
+                        month: 03,
+                        year: 2023,
+                        city: 'America/New_York'
+                    },
+                    {
+                        date: 22,
+                        month: 04,
+                        year: 2023,
+                        city: 'America/New_York'
+                    },
+                    {
+                        date: 01,
+                        month: 06,
+                        year: 2023,
+                        city: 'America/New_York'
+                    },
+                    {
+                        date: 07,
+                        month: 07,
+                        year: 2023,
+                        city: 'America/New_York'
+                    },
+                    {
+                        date: 04,
+                        month: 08,
+                        year: 2023,
+                        city: 'America/New_York'
+                    },
+                    {
+                        date: 09,
+                        month: 09,
+                        year: 2023,
+                        city: 'America/New_York'
+                    },
+                    {
+                        date: 25,
+                        month: 11,
+                        year: 2023,
+                        city: 'America/New_York'
+                    },
+                    {
+                        date: 26,
+                        month: 11,
+                        year: 2023,
+                        city: 'America/New_York'
+                    },
+
+                    /*2024*/
+                    {
+                        date: 01,
+                        month: 00,
+                        year: 2024,
+                        city: 'America/New_York'
+                    },
+                    {
+                        date: 19,
+                        month: 01,
+                        year: 2024,
+                        city: 'America/New_York'
+                    },
+                    {
+                        date: 29,
+                        month: 02,
+                        year: 2024,
+                        city: 'America/New_York'
+                    },
+                    {
+                        date: 20,
+                        month: 04,
+                        year: 2024,
+                        city: 'America/New_York'
+                    },
+                    {
+                        date: 01,
+                        month: 06,
+                        year: 2024,
+                        city: 'America/New_York'
+                    },
+                    {
+                        date: 05,
+                        month: 07,
+                        year: 2024,
+                        city: 'America/New_York'
+                    },
+                    {
+                        date: 02,
+                        month: 08,
+                        year: 2024,
+                        city: 'America/New_York'
+                    },
+                    {
+                        date: 14,
+                        month: 09,
+                        year: 2024,
+                        city: 'America/New_York'
+                    },
+                    {
+                        date: 25,
+                        month: 11,
+                        year: 2024,
+                        city: 'America/New_York'
+                    },
+                    {
+                        date: 26,
+                        month: 11,
+                        year: 2024,
+                        city: 'America/New_York'
+                    }
+                ],
+
+                onlineSchedules: [{
+                    day: 'Monday-Thursday',
+                    time: '0900-2000',
+                    city: 'America/New_York'
+                },
+                {
+                    day: 'Friday',
+                    time: '0900-1800',
+                    city: 'America/New_York'
+                }],
+
+                chatNowElement: 'chat-button',
+                showSubmitButton: true
+            };
+
+            window.ININ.webchat.create(chatConfig).then(function (webchat) {
+                var startChatButton = document.getElementById('chat-button');
+                startChatButton.onclick = function onStartChatClick() {
+
+                    var isLiveChatAvailable = function () {
+                        if (sessionStorage.getItem("LiveChatTime") == null) {
+                            sessionStorage.setItem("LiveChatTime", Date.now());
+                            return true;
+                        }
+                        else {
+                            if ((Date.now() - sessionStorage.getItem("LiveChatTime")) / 1000 < 300) {
+                                openLiveChatWarningModal()
+                                return false;
+                            }
+                            else {
+                                sessionStorage.setItem("LiveChatTime", Date.now());
+                                return true;
+                            }
+                        }
+                    };
+
+                    if (isLiveChatAvailable()) {
+                        var firstName = document.getElementById('first-name').value;
+                        var lastName = document.getElementById('last-name').value;
+                        var phone = document.getElementById('phone').value;
+                        webchat.getConfig().setData({
+                            firstName: firstName,
+                            lastName: lastName,
+                            addressStreet: '',
+                            addressCity: '',
+                            addressPostalCode: '',
+                            addressState: '',
+                            phoneNumber: phone,
+                            phoneType: '',
+                            customerId: 1
+                        });
+
+
+                        return webchat.renderPopup({
+                            width: 400,
+                            height: 400,
+                            title: 'Chat'
+                        }).catch(function (error) {
+                            console.error('Error starting chat');
+                            console.error(error);
+                        });
+                    }
+                };
+            }).catch(function (error) {
+                console.error('Error initializing chat');
+                console.error(error);
+            });
+        })(window);
+
+        function openLiveChatWarningModal() {
+            $('#liveChatWarningModal').modal('show');
+        }
+    </script>
+
+</body>
+</html>
