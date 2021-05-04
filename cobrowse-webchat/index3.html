@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Genesys Cloud Web Chat Demo</title>
+</head>
+
+<body>
+    <form id="chatForm">
+        <h3>Participant Information- local</h3>
+
+        <table class="webchat-config">
+            <tbody>
+                <tr>
+                    <th>First Name:</th>
+                    <td><input type="text" id="first-name" value="John" /></td>
+                </tr>
+                <tr>
+                    <th>Last Name:</th>
+                    <td><input type="text" id="last-name" value="Doe" /></td>
+                </tr>
+
+            </tbody>
+        </table>
+        <button type="button" id="chat-button">Start Chat</button>
+    </form>
+    <div id="chat-container" style="height:600px"></div>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  
+  
+  <script
+  id="purecloud-webchat-js"
+  type="text/javascript"
+  src="https://apps.mypurecloud.com/webchat/jsapi-v1.js"
+  region="us-east-1"
+  org-guid="b969b710-80cf-4689-9bcf-e9f3befa8e05"
+  deployment-key="8fc6d935-8073-46b7-8240-727f42969740"
+></script>
+  
+
+    <script type="text/javascript">
+
+        $(document).ready(function initializeChat () {
+
+       let chatConfig = {
+  "webchatAppUrl": "https://apps.mypurecloud.com/webchat",
+  "webchatServiceUrl": "https://realtime.mypurecloud.com:443",
+  "orgId": "21125",
+  "orgGuid": "b969b710-80cf-4689-9bcf-e9f3befa8e05",
+  "orgName": "startelecom",
+  "queueName": "Queue_Name_1",
+  "logLevel": "DEBUG",
+  "locale": "en",
+  "data": {
+    "firstName": "Dejan",
+    "lastName": "Pejovic",
+    "addressStreet": "26 Evans Ave",
+    "addressCity": "Toronto",
+    "addressPostalCode": "m6s3v6",
+    "addressState": "Ontario",
+    "phoneNumber": "4163993853",
+    "customField1Label": "Pitanje1",
+    "customField1": "Odgovor1",
+    "customField2Label": "Pitanje2",
+    "customField2": "Odgovor2",
+    "customField3Label": "",
+    "customField3": "",
+    "email": ""
+  },
+  "companyLogo": {
+    "width": 600,
+    "height": 149,
+    "url": "https://d3a63qt71m2kua.cloudfront.net/developer-tools/2019/assets/images/PC-blue-nomark.png"
+  },
+  "companyLogoSmall": {
+    "width": 25,
+    "height": 25,
+    "url": "https://d3a63qt71m2kua.cloudfront.net/developer-tools/2019/assets/images/companylogo.png"
+  },
+  "agentAvatar": {
+    "width": 462,
+    "height": 462,
+    "url": "https://d3a63qt71m2kua.cloudfront.net/developer-tools/2019/assets/images/agent.jpg"
+  },
+  "welcomeMessage": "Thanks for chatting using the dev tools chat page.",
+  "cssClass": "webchat-frame",
+  "css": {
+    "width": "100%",
+    "height": "100%"
+  }
+};   
+          
+          
+          
+          
+          
+            var chatButton = document.getElementById('chat-button');
+
+            // Required if reconnects are enabled
+            window.PURECLOUD_WEBCHAT_FRAME_CONFIG = {
+                containerEl: 'chat-container'
+            };
+
+ININ.webchat.create(chatConfig, function(err, webchat) {
+    if (err) {
+        console.error(err);
+        throw err;
+    }
+
+    webchat.renderPopup({
+        width: 400,
+        height: 400,
+        title: 'Chat'
+    });
+});
+        });
+
+    </script>
+
+</body>
+</html>
