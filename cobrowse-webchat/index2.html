@@ -90,7 +90,7 @@
                 reconnectEnabled: true,
 
                 //Allowed reconnect origins
-                reconnectOrigins: ['https://dejan-pejovic.github.io/'],
+                reconnectOrigins: ['https://dejan-pejovic.github.io'],
 
                 // Logo used within the chat window
                 companyLogoSmall: {
@@ -106,7 +106,7 @@
                 },
 
                 // Text displayed with chat window is displayed
-                welcomeMessage: 'Thanks for chatting.',
+                welcomeMessage: 'Welcome to Startelecom chat!',
 
                 // CSS class applied to the chat window
                 cssClass: 'webchat-frame',
@@ -149,12 +149,6 @@
                                 customerId: 59606
                             });
 
-                            //Use the updateConfig function to update batches of properties by passing in a partially filled chatConfig object
-                            webchat.updateConfig({
-                                agentEmail: 'debrah.agent@example.com',
-                                locale: 'en',
-                                welcomeMessage: 'Welcome to queue 1',
-                            });
 
                             // Alternatively, call webchat.renderPopup here. Note that reconnects do not apply to popup chat.
                             return webchat.renderFrame({
