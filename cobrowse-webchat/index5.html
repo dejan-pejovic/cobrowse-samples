@@ -11,18 +11,16 @@
     <link href="/CMSPages/GetResource.ashx?stylesheetfile=/kffCorporate/ui/site.css" type="text/css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
 
-    <link href="/CMSPages/GetResource.ashx?stylesheetfile=/kffCorporate/ui/site.css" type="text/css" rel="stylesheet" />
     <style type="text/css">
         #chat-button {
             display: none;
         }
 
-            #chat-button.purecloud-chat-available {
-                display: inline;
-            }
-    </style>
-    <style type="text/css">
-        .form-label
+        #chat-button.purecloud-chat-available {
+            display: inline;
+        }
+        
+       .form-label
         {
             font-family:"Roboto",Arial,sans-serif;
             font-size:1.5rem;
@@ -48,11 +46,6 @@
 
     <form id="chatForm">
         <h3 class="form-label">Thank you for contacting Startelecom </h3>
-        <span class="form-hours">
-            Monday – Thursday: 9:00am – 8:00pm EST
-            <br />
-            Friday: 9:00am - 6:00pm EST
-        </span>
         <table class="webchat-config">
             <tbody>
                 <tr>
@@ -71,18 +64,22 @@
         </table>
         <button class="form-button" type="button" id="chat-button">Start Chat</button>
 
-        <!--modal-->
-
     </form>
     <div id="chat-container" style="height:500px"></div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    <script id="purecloud-webchat-js" type="text/javascript" src="https://apps.mypurecloud.com/webchat/jsapi-v1.js" region="us-east-1" org-guid="b969b710-80cf-4689-9bcf-e9f3befa8e05" deployment-key="7b621c4e-50b4-4a23-a4ab-e0892e628c72"></script>
+    <script 
+            id="purecloud-webchat-js" 
+            type="text/javascript" 
+            src="https://apps.mypurecloud.com/webchat/jsapi-v1.js" 
+            region="us-east-1" 
+            org-guid="b969b710-80cf-4689-9bcf-e9f3befa8e05" 
+            deployment-key="7b621c4e-50b4-4a23-a4ab-e0892e628c72">
+    </script>
 
     <script type="text/javascript">
 
         $(document).ready(function initializeChat() {
-
 
             var chatConfig = {
                 webchatAppUrl: 'https://apps.mypurecloud.com/webchat',
@@ -130,7 +127,6 @@
                             phoneType: '',
                             customerId: 1
                         });
-
 
                         return webchat.renderPopup({
                             width: 400,
