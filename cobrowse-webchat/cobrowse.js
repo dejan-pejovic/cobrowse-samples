@@ -3,9 +3,9 @@
  * their specific installations.
  */
 var config = {
-  orgId: '8fc6d935-8073-46b7-8240-727f42969740',
-  orgName: 'Startelecom',
-  queueName: '',
+  orgId: 'b969b710-80cf-4689-9bcf-e9f3befa8e05',
+  orgName: 'startelecom',
+  queueName: 'Queue_Name_1',
   agentEmail: '',
   cobrowseDeploymentKey: '8ef8eX9bN2Dzl8xBKPWnWvLvQYJdo119'
 };
