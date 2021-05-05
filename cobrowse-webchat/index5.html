@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+
+
+<html>
+
+<head runat="server">
+    <title>Chat</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="/kffCorporate/favicon.ico" />
+    <link href="/CMSPages/GetResource.ashx?stylesheetfile=/kffCorporate/ui/site.css" type="text/css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
+
+    <link href="/CMSPages/GetResource.ashx?stylesheetfile=/kffCorporate/ui/site.css" type="text/css" rel="stylesheet" />
+    <style type="text/css">
+        #chat-button {
+            display: none;
+        }
+
+            #chat-button.purecloud-chat-available {
+                display: inline;
+            }
+    </style>
+    <style type="text/css">
+        .form-label
+        {
+            font-family:"Roboto",Arial,sans-serif;
+            font-size:1.5rem;
+            font-weight:400;
+        }
+        .form-button
+        {
+            font-family:"Roboto",Arial,sans-serif;
+            font-size:1.5rem;
+            font-weight:400;
+        }
+        .form-hours
+        {
+            font-family:"Roboto",Arial,sans-serif;
+            font-size:1.5rem;
+            font-weight:400;
+            color:Black;
+        }
+</style>
+</head>
+
+<body>
+
+    <form id="chatForm">
+        <h3 class="form-label">Thank you for contacting Startelecom </h3>
+        <span class="form-hours">
+            Monday – Thursday: 9:00am – 8:00pm EST
+            <br />
+            Friday: 9:00am - 6:00pm EST
+        </span>
+        <table class="webchat-config">
+            <tbody>
+                <tr>
+                    <th class="form-label">First Name:&nbsp;</th>
+                    <td class="form-label"><input type="text" id="first-name" value="" /></td>
+                </tr>
+                <tr>
+                    <th class="form-label">Last Name:&nbsp;</th>
+                    <td class="form-label"><input type="text" id="last-name" value="" /></td>
+                </tr>
+                <tr>
+                    <th class="form-label">Phone:&nbsp;</th>
+                    <td class="form-label"><input type="text" id="phone" value="" /></td>
+                </tr>
+            </tbody>
+        </table>
+        <button class="form-button" type="button" id="chat-button">Start Chat</button>
+
+        <!--modal-->
+        <div class="modal" id="liveChatWarningModal" role="dialog">
+            <div class="modal-dialog .modal-dialog-centered">
+                <div class="modal-content">
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <br />
+                        <p><b>A chat has already been started.</b><p>
+                        <p><b>Please try again in 5 minutes.</b></p>
+                        <br />
+                    </div>
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div id="chat-container" style="height:500px"></div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script id="purecloud-webchat-js" type="text/javascript" src="https://apps.mypurecloud.com/webchat/jsapi-v1.js" region="us-east-1" org-guid="b969b710-80cf-4689-9bcf-e9f3befa8e05" deployment-key="7b621c4e-50b4-4a23-a4ab-e0892e628c72"></script>
+
+    <script type="text/javascript">
+
+        $(document).ready(function initializeChat() {
+
+
+            var chatConfig = {
+                webchatAppUrl: 'https://apps.mypurecloud.com/webchat',
+                webchatServiceUrl: 'https://realtime.mypurecloud.com:443',
+                orgGuid: 'b969b710-80cf-4689-9bcf-e9f3befa8e05',
+                orgId: '21125',
+                orgName: 'startelecom',
+                queueName: 'Queue_Name_1',
+                locale: 'en',
+                logLevel: 'INFO',
+                companyLogoSmall: '',
+                welcomeMessage: 'Thank you for contacting Startelecom.',
+
+                cssClass: 'webchat-frame',
+                css: {
+                    width: '100%',
+                    height: '350px'
+                },
+                reconnectEnabled: true,
+                cobrowseConfig: {
+                    deploymentKey: "8ef8eX9bN2Dzl8xBKPWnWvLvQYJdo119"
+                },
+
+                chatNowElement: 'chat-button',
+                showSubmitButton: true
+            };
+
+            window.ININ.webchat.create(chatConfig).then(function (webchat) {
+                var startChatButton = document.getElementById('chat-button');
+                startChatButton.onclick = function onStartChatClick() {
+
+                    var isLiveChatAvailable = function () {
+                        if (sessionStorage.getItem("LiveChatTime") == null) {
+                            sessionStorage.setItem("LiveChatTime", Date.now());
+                            return true;
+                        }
+                        else {
+                            if ((Date.now() - sessionStorage.getItem("LiveChatTime")) / 1000 < 300) {
+                                openLiveChatWarningModal()
+                                return false;
+                            }
+                            else {
+                                sessionStorage.setItem("LiveChatTime", Date.now());
+                                return true;
+                            }
+                        }
+                    };
+
+                    if (isLiveChatAvailable()) {
+                        var firstName = document.getElementById('first-name').value;
+                        var lastName = document.getElementById('last-name').value;
+                        var phone = document.getElementById('phone').value;
+                        webchat.getConfig().setData({
+                            firstName: firstName,
+                            lastName: lastName,
+                            addressStreet: '',
+                            addressCity: '',
+                            addressPostalCode: '',
+                            addressState: '',
+                            phoneNumber: phone,
+                            phoneType: '',
+                            customerId: 1
+                        });
+
+
+                        return webchat.renderPopup({
+                            width: 400,
+                            height: 400,
+                            title: 'Chat'
+                        }).catch(function (error) {
+                            console.error('Error starting chat');
+                            console.error(error);
+                        });
+                    }
+                };
+            }).catch(function (error) {
+                console.error('Error initializing chat');
+                console.error(error);
+            });
+        })(window);
+
+        function openLiveChatWarningModal() {
+            $('#liveChatWarningModal').modal('show');
+        }
+    </script>
+
+</body>
+</html>
+
