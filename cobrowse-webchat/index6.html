@@ -88,13 +88,18 @@
             };
             var chatButton = document.getElementById('chat-button');
 
-
+            // Required if reconnects are enabled
+            window.PURECLOUD_WEBCHAT_FRAME_CONFIG = {
+                containerEl: 'chat-container'
+            };
 
             ININ.webchat.create(chatConfig)
                 .then(function (webchat) {
-              
-              
-
+                    // Optionally use isAutoJoined if reconnects are enabled
+                    if (webchat.isAutoJoined()) {
+                        // Do something to disable chat button
+                    } else {
+                        chatButton.onclick = function () {
                             var firstName = document.getElementById('first-name').value;
                             var lastName = document.getElementById('last-name').value;
                             var agentEmail = document.getElementById('agent-email').value;
@@ -115,23 +120,22 @@
 
 
                             // Alternatively, call webchat.renderPopup here. Note that reconnects do not apply to popup chat.
-                                return webchat.renderPopup({
-      width: 400,
-      height: 400,
-      title: 'Chat',
-      //set newTab to true if using screen share
-      newTab: false
-    }).catch(function (error) {
+                            return webchat.renderPopup({
+                                width: 400,
+                                height: 400,
+                                title: 'Chat',
+                                //set newTab to true if using screen share
+                                newTab: false
+                            }).catch(function (error) {
                                 console.error('Error starting chat');
                                 console.error(error);
                             });;
-                        
-              
-              
+                        };
+                    }
                 })
                 .catch(function (err){
                     console.log(err);
-                );
+                });
         });
 
     </script>
